@@ -1,14 +1,29 @@
 package no.uib.ii.inf102.f18.mandatory1;
 
-import java.util.Iterator;
-
 /**
  * @author Amalie Rovik
  * This class will do the Quicksort algorithm non-recursive (iterative).
  * The cost is approximately O(n log n) or O(n^2) in some cases, which is worst case guaranteed.
  */
 public class IterativeQuick {
-    iStack<Comparable[]> stack;
+
+    /**
+     * Test IterativeQuick by calling main method.
+     * @param args
+     */
+    public static void main(String[] args) {
+        int[] arr = new int[5];
+        arr[0] = 10;
+        arr[1] = 5;
+
+        MyStack<int[]> stack = new MyStack<>();
+        stack.add(arr);
+
+        System.out.println(stack.pop()[0]);
+
+        System.out.println(stack.getCount());
+
+    }
 
     /**
      * Takes an array with objects which has inherited Comparable
@@ -30,45 +45,5 @@ public class IterativeQuick {
      */
     public void sort(Comparable[] arr, int s, int e) {
 
-    }
-
-    /**
-     * @author Amalie Rovik
-     * iStack is a simplified implementation of the java Stack utility.
-     */
-    class iStack<T> implements Iterator {
-        Node<T> head, tail, current == null; // Invariants for the Stack.
-        /**
-         * Run the constructor when an iStack instance is created
-         * and initialize the stack.
-         */
-        iStack() {
-
-        }
-
-        public boolean hasNext() {
-
-        }
-
-        /**
-         * @author Amalie Rovik
-         * This Node class will represent a node object in an iStack instance.
-         *
-         * @param <E>
-         */
-        class Node<E> {
-            E data = null;
-            Node<E> next = null;
-
-            Node(E d) {
-                data = d;
-            }
-
-            public void setNext(Node<E> n) {
-                next = n;
-            }
-
-            public void
-        }
     }
 }
