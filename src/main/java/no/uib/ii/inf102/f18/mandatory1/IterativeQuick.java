@@ -1,5 +1,7 @@
 package no.uib.ii.inf102.f18.mandatory1;
 
+import java.util.Iterator;
+
 /**
  * @author Amalie Rovik
  * This class will do the Quicksort algorithm non-recursive (iterative).
@@ -34,8 +36,8 @@ public class IterativeQuick {
      * @author Amalie Rovik
      * iStack is a simplified implementation of the java Stack utility.
      */
-    class iStack<T> {
-        Node<T> head; // Head of the Node stack.
+    class iStack<T> implements Iterator {
+        Node<T> head, tail, current == null; // Invariants for the Stack.
         /**
          * Run the constructor when an iStack instance is created
          * and initialize the stack.
@@ -44,13 +46,29 @@ public class IterativeQuick {
 
         }
 
+        public boolean hasNext() {
+
+        }
+
         /**
          * @author Amalie Rovik
-         * This will represent a node in and iStack instance.
+         * This Node class will represent a node object in an iStack instance.
+         *
          * @param <E>
          */
         class Node<E> {
+            E data = null;
+            Node<E> next = null;
 
+            Node(E d) {
+                data = d;
+            }
+
+            public void setNext(Node<E> n) {
+                next = n;
+            }
+
+            public void
         }
     }
 }
