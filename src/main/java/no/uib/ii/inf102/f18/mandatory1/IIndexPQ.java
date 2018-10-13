@@ -95,5 +95,4 @@ public interface IIndexPQ<Key extends Comparable<Key>> {
      * @return true if the priority queue is empty, false otherwise
      */
     boolean isEmpty();
-
 }
