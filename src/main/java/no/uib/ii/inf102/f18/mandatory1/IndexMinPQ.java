@@ -36,6 +36,6 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements IIndexPQ<Key> {
     }
 
     boolean isEmpty(){
-
+    return true;
     }
 }
