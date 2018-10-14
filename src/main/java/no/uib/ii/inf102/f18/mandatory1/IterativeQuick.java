@@ -59,24 +59,24 @@ public class IterativeQuick {
     }
 
     public void sort(Comparable[] arr, int start, int end) {
-        MyStack<int[]> stack = new MyStack<>();
+        MyStack<Pair<Integer>> stack = new MyStack<>();
+        Pair<Integer> range = new Pair<>(start, end);
 
-        int[] range = {start, end};
         stack.push(range);
 
         while (stack.size() > 0) {
             range = stack.pop();
-            start = range[0];
-            end = range[1];
+            start = range.getX();
+            end = range.getY();
 
             int pivot = partition(arr, start, end);
 
             if (start < pivot - 1) {
-                stack.push(new int[]{start, pivot - 1});
+                stack.push(new Pair(start, pivot - 1));
             }
 
             if (pivot + 1 < end) {
-                stack.push(new int[]{pivot + 1, end});
+                stack.push(new Pair(pivot + 1, end));
             }
         }
     }

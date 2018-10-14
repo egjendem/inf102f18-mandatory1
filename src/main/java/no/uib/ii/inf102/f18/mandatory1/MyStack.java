@@ -9,7 +9,6 @@ import java.util.Iterator;
  * @author Espen Gjendem
  */
 public class MyStack<T> implements Iterable<T> {
-    Node<T> head;
     Node<T> top;
     int count;
 
@@ -17,7 +16,6 @@ public class MyStack<T> implements Iterable<T> {
      * initialize the stack properties.
      */
     MyStack() {
-        head = null;
         top = null;
         count = 0;
     }
@@ -31,10 +29,9 @@ public class MyStack<T> implements Iterable<T> {
         Node<T> node = new Node<>(d);
 
         if (!isEmpty()) {
-            top.setNext(node);
+            node.setNext(top);
             top = node;
         } else {
-            head = node;
             top = node;
         }
 
@@ -42,31 +39,19 @@ public class MyStack<T> implements Iterable<T> {
     }
 
     /**
-     * Takes the outermost node an removes it from the
-     * stack and returns the data contained inside the node.
+     * Takes the top node an removes it from the
+     * stack and returns the contained data.
      *
      * @return Node's data
      */
     public T pop() {
-        Node<T> current = head;
+        Node<T> tmp;
 
-        if (count > 1) {
-            Node<T> prev = null;
-
-            while (current.getNext() != null) {
-                prev = current;
-                current = current.getNext();
-            }
-
-            top = prev;
-            top.next = null;
+        if (!isEmpty()) {
+            tmp = top;
+            top = top.getNext();
             count--;
-            return current.getData();
-        } else if (count == 1) {
-            head = null;
-            top = null;
-            count--;
-            return current.getData();
+            return tmp.getData();
         }
 
         return null;
@@ -92,6 +77,10 @@ public class MyStack<T> implements Iterable<T> {
 
     /**
      * Stack iterator singleton for simplicity.
+     * Important notice! This will iterate from the top down and not
+     * bottom up like the conventional way in Java.
+     * Though it is common in other languages like
+     * C and other lower level languages.
      *
      * @author Espen Gjendem
      * @return Iterator
@@ -109,7 +98,7 @@ public class MyStack<T> implements Iterable<T> {
             @Override
             public T next() {
                 if (n == null && hasNext()) {
-                    n = head;
+                    n = top;
                     iteratorCount++;
                     return n.getData();
                 } else if (hasNext()) {
@@ -147,7 +136,7 @@ public class MyStack<T> implements Iterable<T> {
         }
 
         public Node<E> getNext() {
-            return next;
+            return next != null ? next : null;
         }
     }
 }
