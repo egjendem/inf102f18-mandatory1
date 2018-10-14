@@ -6,7 +6,7 @@ import java.util.Iterator;
  * MyStack is a simplified implementation of the java Stack utility.
  * @author Amalie Rovik
  */
-public class MyStack<T> /* implements Iterable */ {
+public class MyStack<T> implements Iterable {
     Node<T> head, tail;
     int count = 0;
 
