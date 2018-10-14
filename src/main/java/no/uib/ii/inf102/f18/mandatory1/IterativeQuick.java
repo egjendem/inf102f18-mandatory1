@@ -5,6 +5,8 @@ import java.util.Iterator;
 
 /**
  * @author Amalie Rovik
+ * @author Espen Gjendem
+ *
  * This class will do the Quicksort algorithm non-recursive (iterative).
  * The cost is approximately O(n log n) or O(n^2) in some cases, which is worst case guaranteed.
  */
@@ -52,19 +54,9 @@ public class IterativeQuick {
         return i + 1;
     }
 
-    public void quicksort(int[] arr, int start, int end) {
-        if (start < end) {
-            int p = partition(arr, start, end);
-            quicksort(arr, start, p - 1);
-            quicksort(arr, p + 1, end);
-        } else {
-            return;
-        }
-    }
-
     public void sort(int[] arr, int start, int end) {
         MyStack<int[]> stack = new MyStack<>();
-        // Stack<int[]> stack = new Stack<>();
+
         int[] range = {start, end};
         stack.push(range);
 
