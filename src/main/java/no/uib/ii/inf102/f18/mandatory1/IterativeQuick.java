@@ -17,6 +17,7 @@ public class IterativeQuick {
         int[] arr = {2, 3, 4, 8, 10, 23, 9};
         int[] arr4 = {1, 2, 3, 4, 5, 6, 7};
         int[] arr5 = {7, 6, 5, 4, 3, 2, 1};
+        int[] arr9 = {4, 3, 1, 2, 3, 2, 1};
 
         IterativeQuick iq = new IterativeQuick();
 
