@@ -20,7 +20,7 @@ public class IterativeQuick {
      * @param end Array index end
      * @return int Pivot Index
      */
-    public int partition(Comparable[] arr, int start, int end) {
+    public static int partition(Comparable[] arr, int start, int end) {
         Comparable pivot = arr[end];
         int i = start - 1;
 
@@ -36,7 +36,7 @@ public class IterativeQuick {
         return i + 1;
     }
 
-    public void sort(Comparable[] arr, int start, int end) {
+    public static void sort(Comparable[] arr, int start, int end) {
         MyStack<Pair<Integer>> stack = new MyStack<>();
         Pair<Integer> range = new Pair<>(start, end);
 
@@ -59,7 +59,7 @@ public class IterativeQuick {
         }
     }
 
-    public void swap(Comparable[] arr, int i, int j) {
+    public static void swap(Comparable[] arr, int i, int j) {
         Comparable tmp = arr[i];
         arr[i] = arr[j];
         arr[j] = tmp;
@@ -72,7 +72,7 @@ public class IterativeQuick {
      *
      * @param arr Array to be sorted
      */
-    public void sort(Comparable[] arr) {
+    public static void sort(Comparable[] arr) {
         sort(arr, 0, arr.length - 1);
     }
 }

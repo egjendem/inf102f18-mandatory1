@@ -19,8 +19,6 @@ public class TrollBook {
     }
 
     public static void main(String[] args) {
-        IterativeQuick iQ = new IterativeQuick();
-
         Kattio io = new Kattio(System.in);
         int n = io.getInt();
         Page[] pages = new Page[n];
@@ -30,7 +28,7 @@ public class TrollBook {
         }
 
         // Quick.sort(pages);
-        iQ.sort(pages);
+        IterativeQuick.sort(pages);
 
         String res = String.join(" ", Stream.of(pages).map(p -> p.w).toArray(String[]::new));
         System.out.println(res);
