@@ -8,28 +8,6 @@ package no.uib.ii.inf102.f18.mandatory1;
  * The cost is approximately O(n log n) or O(n^2) in some cases, which is worst case guaranteed.
  */
 public class IterativeQuick {
-
-    /**
-     * Test IterativeQuick by calling main method.
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        /* int[] arr = {1, 5, 3, 9, 4, 6, 10, 55, 2};
-
-        IterativeQuick iq = new IterativeQuick(); // Instantiate the IterativeQuick object.
-
-        iq.sort(arr, 0, arr.length-1); // Iterative Quicksort starts here.
-
-        for (int i = 0; i < arr.length; i++) {
-            if (i != arr.length - 1) {
-                System.out.print(arr[i] + ", ");
-            } else {
-                System.out.print(arr[i]);
-            }
-        } */
-    }
-
     /**
      * Partition an array by dividing it and create three parts. One array containing
      * values less than the pivot, another array for the values greater than the pivot and just
