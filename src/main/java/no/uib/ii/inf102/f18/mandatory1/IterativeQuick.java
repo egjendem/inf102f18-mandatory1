@@ -15,7 +15,7 @@ public class IterativeQuick {
      * @param args
      */
     public static void main(String[] args) {
-        int[] arr = {1, 5, 3, 9, 4, 6, 10, 55, 2};
+        /* int[] arr = {1, 5, 3, 9, 4, 6, 10, 55, 2};
 
         IterativeQuick iq = new IterativeQuick(); // Instantiate the IterativeQuick object.
 
@@ -27,7 +27,7 @@ public class IterativeQuick {
             } else {
                 System.out.print(arr[i]);
             }
-        }
+        } */
     }
 
     /**
@@ -42,12 +42,12 @@ public class IterativeQuick {
      * @param end Array index end
      * @return int Pivot Index
      */
-    public int partition(int[] arr, int start, int end) {
-        int pivot = arr[end];
+    public int partition(Comparable[] arr, int start, int end) {
+        Comparable pivot = arr[end];
         int i = start - 1;
 
         for (int j = start; j < end; j++) {
-            if (arr[j] <= pivot) {
+            if (pivot.compareTo(arr[j]) >= 0) {
                 i++;
                 swap(arr, i, j);
             }
@@ -58,7 +58,7 @@ public class IterativeQuick {
         return i + 1;
     }
 
-    public void sort(int[] arr, int start, int end) {
+    public void sort(Comparable[] arr, int start, int end) {
         MyStack<int[]> stack = new MyStack<>();
 
         int[] range = {start, end};
@@ -81,8 +81,8 @@ public class IterativeQuick {
         }
     }
 
-    public void swap(int[] arr, int i, int j) {
-        int tmp = arr[i];
+    public void swap(Comparable[] arr, int i, int j) {
+        Comparable tmp = arr[i];
         arr[i] = arr[j];
         arr[j] = tmp;
     }
@@ -95,17 +95,6 @@ public class IterativeQuick {
      * @param arr Array to be sorted
      */
     public void sort(Comparable[] arr) {
-
-    }
-
-    /**
-     * This method does the non-recursive Quicksort algorithm.
-     *
-     * @param arr
-     * @param s
-     * @param e
-     */
-    public void sort(Comparable[] arr, int s, int e) {
-
+        sort(arr, 0, arr.length - 1);
     }
 }
