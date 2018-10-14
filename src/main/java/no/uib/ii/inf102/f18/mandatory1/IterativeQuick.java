@@ -20,7 +20,7 @@ public class IterativeQuick {
      * @param end Array index end
      * @return int Pivot Index
      */
-    public static int partition(Comparable[] arr, int start, int end) {
+    /* public static int partition(Comparable[] arr, int start, int end) {
         Comparable pivot = arr[end];
         int i = start - 1;
 
@@ -34,6 +34,10 @@ public class IterativeQuick {
         swap(arr, i + 1, end);
 
         return i + 1;
+    } */
+
+    public static int partition(Comparable[] arr, int start, int end) {
+        
     }
 
     public static void sort(Comparable[] arr, int start, int end) {
