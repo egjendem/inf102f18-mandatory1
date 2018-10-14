@@ -1,8 +1,5 @@
 package no.uib.ii.inf102.f18.mandatory1;
 
-import java.util.Arrays;
-import java.util.Iterator;
-
 /**
  * @author Amalie Rovik
  * @author Espen Gjendem
@@ -14,16 +11,23 @@ public class IterativeQuick {
 
     /**
      * Test IterativeQuick by calling main method.
+     *
      * @param args
      */
     public static void main(String[] args) {
         int[] arr = {1, 5, 3, 9, 4, 6, 10, 55, 2};
 
-        IterativeQuick iq = new IterativeQuick();
+        IterativeQuick iq = new IterativeQuick(); // Instantiate the IterativeQuick object.
 
-        System.out.println(Arrays.toString(arr));
-        iq.sort(arr, 0, arr.length-1);
-        System.out.println(Arrays.toString(arr));
+        iq.sort(arr, 0, arr.length-1); // Iterative Quicksort starts here.
+
+        for (int i = 0; i < arr.length; i++) {
+            if (i != arr.length - 1) {
+                System.out.print(arr[i] + ", ");
+            } else {
+                System.out.print(arr[i]);
+            }
+        }
     }
 
     /**
