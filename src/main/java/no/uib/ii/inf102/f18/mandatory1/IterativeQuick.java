@@ -1,6 +1,7 @@
 package no.uib.ii.inf102.f18.mandatory1;
 
 import java.util.Arrays;
+import java.util.Stack;
 
 /**
  * @author Amalie Rovik
@@ -14,18 +15,13 @@ public class IterativeQuick {
      * @param args
      */
     public static void main(String[] args) {
-        int[] arr = {2, 3, 4, 8, 10, 23, 9};
-        int[] arr4 = {1, 2, 3, 4, 5, 6, 7};
-        int[] arr5 = {7, 6, 5, 4, 3, 2, 1};
-        int[] arr9 = {4, 3, 1, 2, 3, 2, 1};
+        int[] arr = {1, 2, 30, 9, 10, 6, 34, 1, 44, 23, 91, 9};
+        int[] arr7 = {1, 2, 3, 9, 4, 6};
 
         IterativeQuick iq = new IterativeQuick();
 
-        MyStack<int[]> stack = new MyStack<>();
-        stack.add(arr);
-
         System.out.println(Arrays.toString(arr));
-        iq.quicksort(arr, 0, arr.length-1);
+        iq.sort(arr, 0, arr.length-1);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -64,6 +60,29 @@ public class IterativeQuick {
             quicksort(arr, p + 1, end);
         } else {
             return;
+        }
+    }
+
+    public void sort(int[] arr, int start, int end) {
+        MyStack<int[]> stack = new MyStack<>();
+        // Stack<int[]> stack = new Stack<>();
+        int[] range = {start, end};
+        stack.push(range);
+
+        while (stack.size() > 0) {
+            range = stack.pop();
+            start = range[0];
+            end = range[1];
+
+            int pivot = partition(arr, start, end);
+
+            if (start < pivot - 1) {
+                stack.push(new int[]{start, pivot - 1});
+            }
+
+            if (pivot + 1 < end) {
+                stack.push(new int[]{pivot + 1, end});
+            }
         }
     }
 

@@ -7,27 +7,28 @@ import java.util.Iterator;
  * @author Amalie Rovik
  */
 public class MyStack<T> implements Iterable {
-    Node<T> head, tail;
-    int count = 0;
+    Node<T> head;
+    Node<T> top;
+    int count;
 
     /**
      * Run the constructor when an MyStack instance is created
-     * and initialize the stack with head/tail equal to null.
+     * and initialize the stack with top equal to null.
      */
     MyStack() {
-        head = null;
-        tail = null;
+        top = null;
+        count = 0;
     }
 
-    public void add(T d) {
+    public void push(T d) {
         Node<T> node = new Node<>(d);
 
-        if (isEmpty()) {
-            head = node;
-            tail = node;
+        if (!isEmpty()) {
+            top.setNext(node);
+            top = node;
         } else {
-            tail.setNext(node);
-            tail = node;
+            head = node;
+            top = node;
         }
 
         count++;
@@ -43,18 +44,20 @@ public class MyStack<T> implements Iterable {
         Node<T> current = head;
 
         if (count > 1) {
-            Node<T> former = null;
+            Node<T> prev = null;
 
-            while (current != tail) {
-                former = current;
+            while (current.getNext() != null) {
+                prev = current;
                 current = current.getNext();
             }
 
-            tail = former;
+            top = prev;
+            top.next = null;
             count--;
             return current.getData();
         } else if (count == 1) {
             head = null;
+            top = null;
             count--;
             return current.getData();
         }
@@ -62,21 +65,17 @@ public class MyStack<T> implements Iterable {
         return null;
     }
 
-    public int getCount() {
+    public int size() {
         return count;
     }
 
-    public Node<T> getHeadNode() {
-        return head;
-    }
-
     public boolean isEmpty() {
-        return head == null ? true : false;
+        return top == null ? true : false;
     }
 
-    /* public MyStackIterator<T> iterator() {
+    public Iterator<T> iterator() {
         return null;
-    } */
+    }
 
     /**
      * This Node class will represent a node object in an MyStack instance.
@@ -98,10 +97,6 @@ public class MyStack<T> implements Iterable {
 
         public void setNext(Node<E> n) {
             next = n;
-        }
-
-        public void setNextToNull() {
-            next = null;
         }
 
         public Node<E> getNext() {
