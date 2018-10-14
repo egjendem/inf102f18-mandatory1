@@ -6,20 +6,25 @@ import java.util.Iterator;
  * MyStack is a simplified implementation of the java Stack utility.
  * @author Amalie Rovik
  */
-public class MyStack<T> implements Iterable {
+public class MyStack<T> implements Iterable<T> {
     Node<T> head;
     Node<T> top;
     int count;
 
     /**
-     * Run the constructor when an MyStack instance is created
-     * and initialize the stack with top equal to null.
+     * initialize the stack properties.
      */
     MyStack() {
+        head = null;
         top = null;
         count = 0;
     }
 
+    /**
+     * Push an element of type T into the stack.
+     *
+     * @param d Data of type T
+     */
     public void push(T d) {
         Node<T> node = new Node<>(d);
 
@@ -65,20 +70,59 @@ public class MyStack<T> implements Iterable {
         return null;
     }
 
+    /**
+     * Return the size of the stack.
+     *
+     * @return Int
+     */
     public int size() {
         return count;
     }
 
+    /**
+     * Check if the stack is an empty set.
+     *
+     * @return Boolean
+     */
     public boolean isEmpty() {
         return top == null ? true : false;
     }
 
+    /**
+     * Stack iterator singleton for simplicity.
+     *
+     * @return Iterator
+     */
     public Iterator<T> iterator() {
-        return null;
+        return new Iterator<T>() {
+            Node<T> n = null;
+            int iteratorCount = 0;
+
+            @Override
+            public boolean hasNext() {
+                return iteratorCount < size() ? true : false;
+            }
+
+            @Override
+            public T next() {
+                if (n == null && hasNext()) {
+                    n = head;
+                    iteratorCount++;
+                    return n.getData();
+                } else if (hasNext()) {
+                    n = n.getNext();
+                    iteratorCount++;
+                    return n.getData();
+                }
+
+                return null;
+            }
+        };
     }
 
     /**
      * This Node class will represent a node object in an MyStack instance.
+     *
      * @author Amalie Rovik
      * @param <E>
      */
@@ -103,24 +147,4 @@ public class MyStack<T> implements Iterable {
             return next;
         }
     }
-
-    /**
-     * MyStackIterator is an inner class of MyStack which work
-     * as an Iterator instance when iterator() is called.
-     * @author Amalie Rovik
-     * @param <T>
-     */
-    /* class MyStackIterator<T> implements Iterator<T> {
-        Node<T> current = head;
-
-        public boolean hasNext() {
-            return current.getNext() != null ? true : false;
-        }
-
-        public T next() {
-            Node<T> tmp = current;
-            current = current.getNext();
-            return tmp;
-        }
-    } */
 }

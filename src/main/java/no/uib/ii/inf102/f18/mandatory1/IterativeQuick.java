@@ -1,7 +1,7 @@
 package no.uib.ii.inf102.f18.mandatory1;
 
 import java.util.Arrays;
-import java.util.Stack;
+import java.util.Iterator;
 
 /**
  * @author Amalie Rovik
@@ -15,8 +15,7 @@ public class IterativeQuick {
      * @param args
      */
     public static void main(String[] args) {
-        int[] arr = {1, 2, 30, 9, 10, 6, 34, 1, 44, 23, 91, 9};
-        int[] arr7 = {1, 2, 3, 9, 4, 6};
+        int[] arr = {1, 5, 3, 9, 4, 6, 10, 55, 2};
 
         IterativeQuick iq = new IterativeQuick();
 
