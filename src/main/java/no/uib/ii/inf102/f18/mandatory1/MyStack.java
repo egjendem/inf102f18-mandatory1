@@ -6,28 +6,34 @@ import java.util.Iterator;
  * MyStack is a simplified implementation of the java Stack utility.
  * @author Amalie Rovik
  */
-public class MyStack<T> implements Iterable {
-    Node<T> head, tail;
-    int count = 0;
+public class MyStack<T> implements Iterable<T> {
+    Node<T> head;
+    Node<T> top;
+    int count;
 
     /**
-     * Run the constructor when an MyStack instance is created
-     * and initialize the stack with head/tail equal to null.
+     * initialize the stack properties.
      */
     MyStack() {
         head = null;
-        tail = null;
+        top = null;
+        count = 0;
     }
 
-    public void add(T d) {
+    /**
+     * Push an element of type T into the stack.
+     *
+     * @param d Data of type T
+     */
+    public void push(T d) {
         Node<T> node = new Node<>(d);
 
-        if (isEmpty()) {
-            head = node;
-            tail = node;
+        if (!isEmpty()) {
+            top.setNext(node);
+            top = node;
         } else {
-            tail.setNext(node);
-            tail = node;
+            head = node;
+            top = node;
         }
 
         count++;
@@ -43,18 +49,20 @@ public class MyStack<T> implements Iterable {
         Node<T> current = head;
 
         if (count > 1) {
-            Node<T> former = null;
+            Node<T> prev = null;
 
-            while (current != tail) {
-                former = current;
+            while (current.getNext() != null) {
+                prev = current;
                 current = current.getNext();
             }
 
-            tail = former;
+            top = prev;
+            top.next = null;
             count--;
             return current.getData();
         } else if (count == 1) {
             head = null;
+            top = null;
             count--;
             return current.getData();
         }
@@ -62,24 +70,59 @@ public class MyStack<T> implements Iterable {
         return null;
     }
 
-    public int getCount() {
+    /**
+     * Return the size of the stack.
+     *
+     * @return Int
+     */
+    public int size() {
         return count;
     }
 
-    public Node<T> getHeadNode() {
-        return head;
-    }
-
+    /**
+     * Check if the stack is an empty set.
+     *
+     * @return Boolean
+     */
     public boolean isEmpty() {
-        return head == null ? true : false;
+        return top == null ? true : false;
     }
 
-    public MyStackIterator<T> iterator() {
-        return null;
+    /**
+     * Stack iterator singleton for simplicity.
+     *
+     * @return Iterator
+     */
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            Node<T> n = null;
+            int iteratorCount = 0;
+
+            @Override
+            public boolean hasNext() {
+                return iteratorCount < size() ? true : false;
+            }
+
+            @Override
+            public T next() {
+                if (n == null && hasNext()) {
+                    n = head;
+                    iteratorCount++;
+                    return n.getData();
+                } else if (hasNext()) {
+                    n = n.getNext();
+                    iteratorCount++;
+                    return n.getData();
+                }
+
+                return null;
+            }
+        };
     }
 
     /**
      * This Node class will represent a node object in an MyStack instance.
+     *
      * @author Amalie Rovik
      * @param <E>
      */
@@ -100,32 +143,8 @@ public class MyStack<T> implements Iterable {
             next = n;
         }
 
-        public void setNextToNull() {
-            next = null;
-        }
-
         public Node<E> getNext() {
             return next;
-        }
-    }
-
-    /**
-     * MyStackIterator is an inner class of MyStack which work
-     * as an Iterator instance when iterator() is called.
-     * @author Amalie Rovik
-     * @param <T>
-     */
-    class MyStackIterator<T> implements Iterator<T> {
-        Node<T> current = head;
-
-        public boolean hasNext() {
-            return current.getNext() != null ? true : false;
-        }
-
-        public T next() {
-            Node<T> tmp = current;
-            current = current.getNext();
-            return tmp;
         }
     }
 }
