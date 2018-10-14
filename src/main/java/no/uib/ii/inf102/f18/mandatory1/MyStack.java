@@ -6,7 +6,7 @@ import java.util.Iterator;
  * MyStack is a simplified implementation of the java Stack utility.
  * @author Amalie Rovik
  */
-public class MyStack<T> implements Iterable {
+public class MyStack<T> /* implements Iterable */ {
     Node<T> head, tail;
     int count = 0;
 
@@ -74,9 +74,9 @@ public class MyStack<T> implements Iterable {
         return head == null ? true : false;
     }
 
-    public MyStackIterator<T> iterator() {
+    /* public MyStackIterator<T> iterator() {
         return null;
-    }
+    } */
 
     /**
      * This Node class will represent a node object in an MyStack instance.
@@ -115,7 +115,7 @@ public class MyStack<T> implements Iterable {
      * @author Amalie Rovik
      * @param <T>
      */
-    class MyStackIterator<T> implements Iterator<T> {
+    /* class MyStackIterator<T> implements Iterator<T> {
         Node<T> current = head;
 
         public boolean hasNext() {
@@ -127,5 +127,5 @@ public class MyStack<T> implements Iterable {
             current = current.getNext();
             return tmp;
         }
-    }
+    } */
 }
