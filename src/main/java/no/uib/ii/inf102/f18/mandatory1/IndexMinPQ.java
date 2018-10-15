@@ -1,5 +1,11 @@
 package no.uib.ii.inf102.f18.mandatory1;
 
+/**
+ * Minimum priority queue.
+ *
+ * @author Amalie Rovik
+ * @param <Key>
+ */
 public class IndexMinPQ<Key extends Comparable<Key>> implements IIndexPQ<Key> {
 
     void add(int index, Key key){
