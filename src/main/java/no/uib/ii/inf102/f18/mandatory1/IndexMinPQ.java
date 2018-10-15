@@ -1,5 +1,7 @@
 package no.uib.ii.inf102.f18.mandatory1;
 
+import java.util.NoSuchElementException;
+
 /**
  * Minimum priority queue.
  *
@@ -8,14 +10,18 @@ package no.uib.ii.inf102.f18.mandatory1;
  */
 public class IndexMinPQ<Key extends Comparable<Key>> implements IIndexPQ<Key> {
     // Heap
-    private Key[] heap;
+    private Key[] heap; //items with priorities
 
-    private int n;
-    private int[] pq;
-    private int[] qp;
+    private Key[] keys;
+
+    private int maxN;
+    private int n; //number of elements on PQ
+    private int[] pq; // binary heap using 1-based indexing
+    private int[] qp; // inverse of qp [pq[i]] = pq[qp[i]] = i
 
     public IndexMinPQ(int length) {
-        heap = (Key[]) new Comparable[length];
+        //heap = (Key[]) new Comparable[length];
+        keys = (Key[]) new Comparable[length];
     }
 
     public static void main(String[] args) {
@@ -23,43 +29,62 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements IIndexPQ<Key> {
 
         obj.add(1,"amalie");
         // .. 9
-        obj.add(10,"espen");
+        obj.add(9,"espen");
     }
 
     public void add(int index, Key key) {
-
-        heap[index] = key;
+        if (this.contains(index)) {
+            throw new IllegalArgumentException("Index already in priority queue");
+        }
+        insert(index, key);
     }
 
+    // i = index
     public void changeKey(int index, Key key) {
-        if (i < 0 || i >= maxN) throw new IllegalArgumentException();
-        if (!contains(i)) throw new NoSuchElementException("index is not in the priority queue");
+        if (index < 0 || index >= maxN) throw new IllegalArgumentException();
+        if (!contains(index)) throw new NoSuchElementException("index is not in the priority queue");
+        keys[index] = key;
+        swim(qp[index]);
+        sink(qp[index]);
+    }
+
+    public boolean contains(int i) { // should take constant time
+        if( i < 0 || i >=maxN) throw new IllegalArgumentException();
+        return qp[i] != -1;
+    }
+
+    public void insert(int i, Key key) {
+        if (i < 0 || i >= maxN)
+            throw new IndexOutOfBoundsException();
+        if (contains(i))
+            throw new IllegalArgumentException("index is already in the priority queue");
+        n++;
+        qp[i] = n;
+        pq[n] = i;
         keys[i] = key;
-        swim(qp[i]);
-        sink(qp[i]);
+        swim(n);
     }
 
-    public boolean contains(int index) {
-        return qp[k] != -1;
-    }
-
+    // i = index
     public void delete(int index) {
-        if (i < 0 || i >= maxN) throw new IllegalArgumentException();
-        if (!contains(i)) throw new NoSuchElementException("index is not in the priority queue");
-        int index = qp[i];
+        if (index < 0 || index >= maxN) throw new IndexOutOfBoundsException();
+        if (!contains(index)) throw new NoSuchElementException("index is not in the priority queue");
+        int i = qp[index];
         exchange(index, n--);
         swim(index);
         sink(index);
-        keys[i] = null;
+        keys[i]=null;
         qp[i] = -1;
+        System.out.println("Deleted key at: " + index);
     }
 
+
     public Key getKey(int index) {
-        if( index < 0 || index >=maxN) throw new IllegalArgumentException();
-        // TODO Auto-generated method stub
+        if( index < 0 || index >=maxN)
+            throw new IllegalArgumentException();
         if (!this.contains(index)) {
             throw new IllegalArgumentException("Index not in priority queue");
-        }else return keys[index];
+        } else return keys[index];
     }
 
     public Key peekKey() {
@@ -70,8 +95,20 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements IIndexPQ<Key> {
         return pq[1];
     }
 
-    public int poll() {
+    /*public int poll() {
         return 0;
+    }
+    */
+
+    public void poll(int i, Key key) {
+        if (i < 0 || i >= maxN)
+            throw new IndexOutOfBoundsException();
+        if (!contains(i))
+            throw new NoSuchElementException("index is not in the priority queue");
+        if (keys[i].compareTo(key) <= 0)
+            throw new IllegalArgumentException("Calling decreaseKey() with given argument would not strictly decrease the key");
+        keys[i] = key;
+        swim(qp[i]);
     }
 
     public boolean isEmpty(){
@@ -80,10 +117,6 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements IIndexPQ<Key> {
 
     public int size() {
         return n;
-    }
-
-    public Item min() {
-        return keys[pq[1]];
     }
 
     private void exchange(int i, int j) {

@@ -21,7 +21,7 @@ public class IndexMinPQClient {
         int idx, key;
 
         // Change the line below to initialize with your IndexMinPQ class
-        IIndexPQ<Integer> pq = null; // new IndexMinPQ<>(m);
+       IIndexPQ<Integer> pq = new IndexMinPQ<>(m);
 
         for (int i = 0; i < q; i++) {
             switch (io.getWord().charAt(0)) {
