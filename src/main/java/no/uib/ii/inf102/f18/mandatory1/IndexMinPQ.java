@@ -3,46 +3,39 @@ package no.uib.ii.inf102.f18.mandatory1;
 import java.util.NoSuchElementException;
 
 /**
- * Minimum priority queue.
- *
+ * Minimum indexed priority queue.
+ * Use a binary tree to implementation.
  * @author Amalie Rovik
- * @param <Key>
+ * @param <Key> Is the generic type for the PQ.
  */
+
 public class IndexMinPQ<Key extends Comparable<Key>> implements IIndexPQ<Key> {
-    // Heap
-    private Key[] heap; //items with priorities
-
-    private Key[] keys;
-
+    private Key[] keys; //items with priority
     private int maxN;
     private int n; //number of elements on PQ
     private int[] pq; // binary heap using 1-based indexing
     private int[] qp; // inverse of qp [pq[i]] = pq[qp[i]] = i
 
-    public IndexMinPQ(int length) {
-        //heap = (Key[]) new Comparable[length];
-        keys = (Key[]) new Comparable[length];
+    public IndexMinPQ(int maxN) {
+        if (maxN < 0) throw new IllegalArgumentException();
+        this.maxN = maxN;
+        keys = (Key[]) new Comparable[maxN + 1];    // make this of length NMAX??
+        pq   = new int[maxN + 1];
+        qp   = new int[maxN + 1];                   // make this of length NMAX??
+        for (int i = 0; i <= maxN; i++) qp[i] = -1;
     }
 
-    public static void main(String[] args) {
-        IndexMinPQ<String> obj = new IndexMinPQ<>(10);
-
-        obj.add(1,"amalie");
-        // .. 9
-        obj.add(9,"espen");
-    }
-
+    // Adds elements
     public void add(int index, Key key) {
         if (this.contains(index)) {
-            throw new IllegalArgumentException("Index already in priority queue");
+            throw new IllegalArgumentException("Index already in PQ");
         }
         insert(index, key);
     }
 
-    // i = index
     public void changeKey(int index, Key key) {
         if (index < 0 || index >= maxN) throw new IllegalArgumentException();
-        if (!contains(index)) throw new NoSuchElementException("index is not in the priority queue");
+        if (!contains(index)) throw new NoSuchElementException("It is not in the PQ");
         keys[index] = key;
         swim(qp[index]);
         sink(qp[index]);
@@ -57,7 +50,7 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements IIndexPQ<Key> {
         if (i < 0 || i >= maxN)
             throw new IndexOutOfBoundsException();
         if (contains(i))
-            throw new IllegalArgumentException("index is already in the priority queue");
+            throw new IllegalArgumentException("It is already in the PQ");
         n++;
         qp[i] = n;
         pq[n] = i;
@@ -65,19 +58,17 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements IIndexPQ<Key> {
         swim(n);
     }
 
-    // i = index
     public void delete(int index) {
         if (index < 0 || index >= maxN) throw new IndexOutOfBoundsException();
-        if (!contains(index)) throw new NoSuchElementException("index is not in the priority queue");
+        if (!contains(index)) throw new NoSuchElementException("Index is not in the priority queue");
         int i = qp[index];
         exchange(index, n--);
         swim(index);
         sink(index);
         keys[i]=null;
         qp[i] = -1;
-        System.out.println("Deleted key at: " + index);
+        System.out.println("Deleted key at index: " + index);
     }
-
 
     public Key getKey(int index) {
         if( index < 0 || index >=maxN)
@@ -95,18 +86,13 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements IIndexPQ<Key> {
         return pq[1];
     }
 
-    /*public int poll() {
-        return 0;
-    }
-    */
-
     public void poll(int i, Key key) {
         if (i < 0 || i >= maxN)
             throw new IndexOutOfBoundsException();
         if (!contains(i))
-            throw new NoSuchElementException("index is not in the priority queue");
+            throw new NoSuchElementException("The index is not in the PQ");
         if (keys[i].compareTo(key) <= 0)
-            throw new IllegalArgumentException("Calling decreaseKey() with given argument would not strictly decrease the key");
+            throw new IllegalArgumentException("This argument would not decrease the key");
         keys[i] = key;
         swim(qp[i]);
     }
