@@ -3,23 +3,28 @@ package no.uib.ii.inf102.f18.mandatory1;
 import java.util.NoSuchElementException;
 
 /**
- * 1-indexed 
+ * Minimum indexed priority queue.
+ * Use a binary tree to implementation.
  *
  * @author Amalie Rovik
- * @param <Key>
+ * @param <Key> Is the generic type for the PQ.
  */
 public class IndexMinPQ<Key extends Comparable<Key>> implements IIndexPQ<Key> {
 
+    /**
+     * pq[n] returns index of K.
+     * qp[i] returns placement of k in pq.
+     * keys[i] returns key object.
+     */
     private Key[] keys;
     private int maxN;
-    private int n; //number of elements on PQ
+    private int n; // number of elements on PQ
     private int[] pq; // binary heap using 1-based indexing
     private int[] qp; // inverse of qp[pq[i]] = pq[qp[i]] = i
 
     public IndexMinPQ(int size) {
         maxN = size + 1;
         n = 0;
-
         keys = (Key[]) new Comparable[maxN];
         pq = new int[maxN];
         qp = new int[maxN];
@@ -36,7 +41,6 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements IIndexPQ<Key> {
         insert(index, key);
     }
 
-    // i = index
     public void changeKey(int index, Key key) {
         if (index < 0 || index >= maxN) throw new IllegalArgumentException();
         if (!contains(index)) throw new NoSuchElementException("index is not in the priority queue");
@@ -62,7 +66,6 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements IIndexPQ<Key> {
         swim(n);
     }
 
-    // i = index
     public void delete(int index) {
         if (index < 0 || index >= maxN) throw new IndexOutOfBoundsException();
         if (!contains(index)) throw new NoSuchElementException("index is not in the priority queue");
