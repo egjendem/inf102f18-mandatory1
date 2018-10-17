@@ -1,21 +1,28 @@
 package no.uib.ii.inf102.f18.mandatory1;
 
+import java.awt.event.ItemEvent;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * MyStack is a simplified implementation of the java Stack utility.
  *
  * @author Amalie Rovik
- * @author Espen Gjendem
  */
-public class MyStack<T> implements Iterable<T> {
-    Node<T> top;
-    int count;
+public class MyStack<Item extends Comparable<Item>> implements Iterable<Item> {
+    private Node<Item> top; // stack top
+    private int count;
+
+    public static class Node<Item> {
+        private Item item;
+        private Node<Item> getNext;
+    }
 
     /**
      * initialize the stack properties.
+     * Empty stack
      */
-    MyStack() {
+    public MyStack(int size) {
         top = null;
         count = 0;
     }
@@ -25,6 +32,8 @@ public class MyStack<T> implements Iterable<T> {
      *
      * @param d Data of type T
      */
+
+    /*
     public void push(T d) {
         Node<T> node = new Node<>(d);
 
@@ -36,6 +45,18 @@ public class MyStack<T> implements Iterable<T> {
         }
 
         count++;
+    }*/
+
+    public void push(Item d) {
+        if(isEmpty()) throw new NoSuchElementException();
+        Node<Item> initFirst = top;
+        top = new Node<Item>();
+        top. = ;
+        top.getNext = initFirst;
+        count++
+        Node<Item> node = new Node<>(d);
+
+
     }
 
     /**
@@ -44,17 +65,26 @@ public class MyStack<T> implements Iterable<T> {
      *
      * @return Node's data
      */
-    public T pop() {
-        Node<T> tmp;
+    public Item pop() {
+        Node<Item> tmp;
 
         if (!isEmpty()) {
             tmp = top;
             top = top.getNext();
             count--;
-            return tmp.getData();
+            //return tmp.getData();
         }
 
         return null;
+    }
+
+    public Item pop() {
+        if (isEmpty()) throw new NoSuchElementException();
+        Item item = top.item;
+        top = top.getNext;
+        count--;
+        return item;
+        }
     }
 
     /**
@@ -82,9 +112,9 @@ public class MyStack<T> implements Iterable<T> {
      * Though it is common in other languages like
      * C and other lower level languages.
      *
-     * @author Espen Gjendem
      * @return Iterator
      */
+    /*
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             Node<T> n = null;
@@ -111,11 +141,10 @@ public class MyStack<T> implements Iterable<T> {
             }
         };
     }
-
+    */
     /**
      * This Node class will represent a node object in an MyStack instance.
      *
-     * @author Espen Gjendem
      * @param <E>
      */
     class Node<E> {
@@ -138,5 +167,29 @@ public class MyStack<T> implements Iterable<T> {
         public Node<E> getNext() {
             return next != null ? next : null;
         }
+    }
+}
+
+@Override
+public class Iterator<Item> iterator() {
+    return new StackIterator<Item>(top);
+    }
+
+private class StackIterator<Item> implements Iterator<Item> {
+    private MyStack.Node<Item> current = top;
+
+    public StackIterator(MyStack.Node<Item> top) {
+        current = top;
+    }
+
+    public booleanhasNext() {
+        return current != null;
+    }
+
+    public Item next() {
+        if (!hasNext()) throw new NoSuchElementException();
+        Item item = current.item;
+        current = current.getNext;
+        return item;
     }
 }

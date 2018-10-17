@@ -59,9 +59,17 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> implements ISy
 
     @Override
     public Value get(Key key) {
-        return find(root, key);
+        Node arguments = root;
+        while(arguments != null) {
+            int compare = key.compareTo(arguments.key);
+            if { (compare > 0) arguments.right; }
+            if { (compare < 0) arguments.left; }
+            else {return arguments.value; }
+        }
+        return null;
     }
 
+    /*
     private Value find(Node node, Key key) {
         if (node == null) {
             return null;
@@ -76,6 +84,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> implements ISy
             return node.value;
         }
     }
+    */
 
     @Override
     public boolean containsKey(Key key) {
@@ -162,7 +171,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> implements ISy
         return queue;
     }
 
-    private void keys(Node node, Deque<Key> queue) {
+    private void keys(Node node, Deque<Key> ) {
         if (node == null) return;
         keys(node.left, queue);
         queue.addLast(node.key);
