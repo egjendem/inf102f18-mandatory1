@@ -1,78 +1,74 @@
 package no.uib.ii.inf102.f18.mandatory1;
 
-/**
- * @author Amalie Rovik
- * @author Espen Gjendem
- *
- * This class will do the Quicksort algorithm non-recursive (iterative).
- * The cost is approximately O(n log n) or O(n^2) in some cases, which is worst case guaranteed.
- */
-public class IterativeQuick {
-    /**
-     * Partition an array by dividing it and create three parts. One array containing
-     * values less than the pivot, another array for the values greater than the pivot and just
-     * return the pivot itself as a singleton element.
-     * (This is not the conventional way to do it,
-     * but we'll simply do it for iterative Quicksort).
-     *
-     * @param arr The array to be partitioned
-     * @param start Array index start
-     * @param end Array index end
-     * @return int Pivot Index
-     */
-    public static int partition(Comparable[] arr, int start, int end) {
-        Comparable pivot = arr[end];
-        int i = start - 1;
+import java.util.SplittableRandom;
 
-        for (int j = start; j < end; j++) {
-            if (pivot.compareTo(arr[j]) >= 0) {
+public class IterativeQuick {
+
+    public static void sort(Comparable[] arr) {
+        shuffle(arr);
+        qs(arr, 0, arr.length-1);
+    }
+
+    public static int part(Comparable[] arr, int lb, int ub) {
+        Comparable pivot = arr[ub];
+        int i = (lb - 1); //lower bound index
+        for (int j = lb; j < ub; j++) {
+            //Check if equal or smaller than piv
+            if (arr[j].compareTo(pivot) <= 0) {
                 i++;
-                swap(arr, i, j);
+                //perform swap i - j
+                Comparable temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
             }
         }
-
-        swap(arr, i + 1, end);
-
+        //perform swap i+1 - pivot
+        Comparable temp = arr[i + 1];
+        arr[i + 1] = arr[ub];
+        arr[ub] = temp;
         return i + 1;
     }
 
-    public static void sort(Comparable[] arr, int start, int end) {
-        MyStack<Pair<Integer>> stack = new MyStack<>();
-        Pair<Integer> range = new Pair<>(start, end);
 
-        stack.push(range);
 
-        while (stack.size() > 0) {
-            range = stack.pop();
-            start = range.getX();
-            end = range.getY();
+    static void qs(Comparable arr[], int l, int h) {
+        // Creating an auxiliary stack, so I can pop from top
+        int[] stack = new int[h - l + 5]; //size + 5
 
-            int pivot = partition(arr, start, end);
+        int top = -1;
 
-            if (start < pivot - 1) {
-                stack.push(new Pair(start, pivot - 1));
+        stack[++top] = l;
+        stack[++top] = h;
+
+        while (top >= 0) {
+            // Pop h and l
+            h = stack[top--];
+            l = stack[top--];
+
+            int p = part(arr, l, h);
+
+            if (p - 1 > l) {
+                stack[++top] = l;
+                stack[++top] = p - 1;
             }
 
-            if (pivot + 1 < end) {
-                stack.push(new Pair(pivot + 1, end));
+            if (p + 1 < h) {
+                stack[++top] = p + 1;
+                stack[++top] = h;
             }
         }
     }
+    private static void shuffle(Comparable[] arr) {
+        SplittableRandom r = new SplittableRandom();
+        for (int i = 0; i < arr.length; i++) {
+            int j = r.nextInt(arr.length-i) + i;
+            swap(i, j, arr);
+        }
+    }
 
-    public static void swap(Comparable[] arr, int i, int j) {
+    private static void swap(int i, int j, Comparable[] arr) {
         Comparable tmp = arr[i];
         arr[i] = arr[j];
         arr[j] = tmp;
-    }
-
-    /**
-     * Takes an array with objects which has inherited Comparable
-     * and calls the sort method declared in this class to start iterative process of
-     * the Quicksort algorithm.
-     *
-     * @param arr Array to be sorted
-     */
-    public static void sort(Comparable[] arr) {
-        sort(arr, 0, arr.length - 1);
     }
 }

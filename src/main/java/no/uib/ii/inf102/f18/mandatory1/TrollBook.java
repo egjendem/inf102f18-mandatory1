@@ -6,15 +6,15 @@ public class TrollBook {
 
     static class Page implements Comparable<Page> {
         private String w;
-        private int pgno;
+        private int pageNr;
 
-        Page(String w, int pgno) {
-            this.w = w;
-            this.pgno = pgno;
+        Page(String s, int pageNr) {
+            this.w = s;
+            this.pageNr = pageNr;
         }
 
         public int compareTo(Page that) {
-            return this.pgno - that.pgno;
+            return this.pageNr - that.pageNr;
         }
     }
 

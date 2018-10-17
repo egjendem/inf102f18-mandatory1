@@ -59,32 +59,15 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> implements ISy
 
     @Override
     public Value get(Key key) {
-        Node arguments = root;
-        while(arguments != null) {
-            int compare = key.compareTo(arguments.key);
-            if { (compare > 0) arguments.right; }
-            if { (compare < 0) arguments.left; }
-            else {return arguments.value; }
+        Node rootNode = root;
+        while(rootNode != null){
+            int res = key.compareTo(rootNode.key);
+            if( res<0) rootNode = rootNode.left;
+            if( res>0) rootNode = rootNode.right;
+            else return rootNode.value;
         }
         return null;
     }
-
-    /*
-    private Value find(Node node, Key key) {
-        if (node == null) {
-            return null;
-        }
-
-        int compare = key.compareTo(node.key);
-        if (compare < 0) {
-            return find(node.left, key);
-        } else if (compare > 0) {
-            return find(node.right, key);
-        } else {
-            return node.value;
-        }
-    }
-    */
 
     @Override
     public boolean containsKey(Key key) {
@@ -166,16 +149,16 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> implements ISy
 
     @Override
     public Iterable<Key> keys() {
-        Deque<Key> queue = new ArrayDeque<>();
-        keys(root, queue);
-        return queue;
+
+        Stack<Key> stack = new Stack<> (size());
+        keys(root, stack);
+        return stack;
     }
 
-    private void keys(Node node, Deque<Key> ) {
+    private void keys(Node node, Stack<Key> stack ) {
         if (node == null) return;
-        keys(node.left, queue);
-        queue.addLast(node.key);
-        keys(node.right, queue);
+        keys(node.left, stack);
+        stack.push(node.key);
+        keys(node.right, stack);
     }
-
 }
