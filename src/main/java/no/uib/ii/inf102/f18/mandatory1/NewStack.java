@@ -1,5 +1,7 @@
 package no.uib.ii.inf102.f18.mandatory1;
 
+import java.util.NoSuchElementException;
+
 class NewStack<T> {
     private Node<T> head = null;
     private int size = 0;
@@ -77,4 +79,30 @@ class NewStack<T> {
     public int getSize() {
         return size;
     }
+
+
+    @Override
+    public class Iterator<Item> iterator() {
+        return new StackIterator<Item>(top);
+    }
+
+    private class StackIterator<Item> implements no.uib.ii.inf102.f18.mandatory1.Iterator<Item> {
+        private MyStack.Node<Item> current = top;
+
+        public StackIterator(MyStack.Node<Item> top) {
+            current = top;
+        }
+
+        public booleanhasNext() {
+            return current != null;
+        }
+
+        public Item next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            Item item = current.item;
+            current = current.getNext;
+            return item;
+        }
+    }
 }
+

@@ -168,9 +168,8 @@ public class MyStack<Item extends Comparable<Item>> implements Iterable<Item> {
             return next != null ? next : null;
         }
     }
-}
 
-@Override
+
 public class Iterator<Item> iterator() {
     return new StackIterator<Item>(top);
     }
